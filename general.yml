@@ -1,0 +1,185 @@
+# ===============================================================================
+# Tomar en cuenta que las reglas que contengan action:remove se ejecutarán primero
+# El órden de las reglas es importante.
+# ===============================================================================
+
+
+# ===============================================================================
+# ▓▓▓▓▓▓ REGLAS PARA RETIRAR CONTENIDO INMEDIATAMENTE ▓▓▓▓▓▓
+# ===============================================================================
+
+# ===============================================================================
+# Quitar cuentas con mala reputación (trolls)
+    author:
+        comment_karma: "< -50"
+    action: remove
+    action_reason: "Usuario de karma bajo"
+---
+
+# ===============================================================================
+# Quitar enlaces a un listado de subreddits y evitar que se pueda re-publicar (crosspost) de ellos
+    domain+url+body: [r/The_Donald, r/Melilla, r/tippytaps] 
+    action: remove
+    action_reason: "Bad subreddit [{{match}}]"
+    modmail: "{{kind}} despublicado por enlazar a un subreddit restringido. Publicación de {{author}}."
+---
+    domain+url+body (regex): ['redd\.it/\w+', 'reddit\.com/comments/\w+']
+    action: remove
+    action_reason: "Reddit short link [{{match}}]"
+    message: "Tu {{kind}} en /r/{{subreddit}}) ha sido despublicado. /r/{{subreddit}} no permite utilizar enlaces cortos de Reddit. Utiliza el enlace de Reddit completo por favor."
+---
+    type: crosspost submission
+    crosspost_subreddit:
+        name: [r/The_Donald, r/Melilla, r/tippytaps]
+    action: remove
+    modmail: "{{kind}} despublicado por re-publicar (crosspost) desde un subreddit restringido. Publicación de {{author}}."
+---
+
+# ===============================================================================
+# Quitar Telegram y invitaciones Whatsapp Group invitations
+    domain+body+title: [t.me , telegram.me , telegram.org , chat.whatsapp.com]
+    action: remove
+    action_reason: "Spam domain [{{match}}]"
+    message: "Tu {{kind}} ha sido retirado porque contiene ({{match}}). No permitimos invitaciones a Telegram o Whatsapp."
+---
+
+# ===============================================================================
+# Quitar URLs cortas que pueden esconder enlaces malignos
+    domain+body+title: ['http://redd.it', 'https://redd.it', 0rz.tw, 1jl.info, 1link.in, 1un.fr, 1url.com, 1url.cz, 1wb2.net, 2.gp, 2.ht, 2big.at, 2doc.net, 2fear.com, 2pl.us, 2tu.us, 2u.xf.cz, 2ya.com, 3.ly, 3x.si, 4ms.me, 4sq.com, 5z8.info, 6g6.eu, 7.ly, 7li.in, 8u.cz, a.co, a.gg, a.nf, a0.fr, a2n.eu, aa.cx, abbrr.com, ad-med.cz, ad.vu, ad5.eu, ad7.biz, adb.ug, adcraft.co, adcrun.ch, adf.ly, adfa.st, adflav.com, adjix.com, adv.li, afx.cc, aka.gr, alturl.com, amzn.to, any.gs, app.link, app.x.co, ar.gy, asso.in, atu.ca, azc.cc, b23.ru, b2l.me, b54.in, b65.us, bc.vc, bcool.bz, beam.to, bee4.biz, bfy.tw, bigly.us, bim.im, binged.it, bit.do, bit.ly, bitly.com, bitw.in, bizj.us, bkite.com, bl.ink, blap.net, ble.pl, blip.tv, bote.me, bougn.at, bravo.ly, brk.to, brzu.net, bsa.ly, bst.is, budurl.com, buff.ly, burnurl.com, bv.ms, bxl.me, bzh.me, canurl.com, cbug.cc, cc.cc, cektkp.com, cf2.me, cf6.co, chilp.it, chzb.gr, cjb.net, cl.ly, clck.ru, cli.gs, cli.re, cliccami.info, clickmeter.com, clickthru.ca, clikk.in, clk.im, clnk.in, cnn.it, conta.cc, cort.as, cot.ag, crisco.com, crks.me, crwd.cr, ctvr.us, cur.lv, cutt.eu, cutt.ly, cutt.us, cuturl.com, cybr.fr, cyonix.to, dai.ly, db.tt, dd.ma, decenturl.com, dfl8.me, dft.ba, digbig.com, digg.com, disq.us, dld.bz, dlvr.it, do.my, dopice.sk, doshort.com, droid.ws, dwarfurl.com, dy.fi, dyo.gs, easyurl.com, easyurl.net, ebay.to, ecra.se, eepurl.com, erw.cz, esyurl.com, eweri.com, exe.io, ezurl.cc, fa.by, fav.me, fb.me, fbshare.me, ff.im, fhurl.com, filoops.info, filz.fr, fire.to, firsturl.de, firsturl.net, flic.kr, flq.us, fly2.ws, freze.it, fur.ly, fwd4.me, fwib.net, g.co, g00.me, geniuslink.com, get-shorty.com, gg.gg, gizmo.do, go.9nl.com, go.ign.com, go.usa.gov, go2.me, go2cut.com, golinks.co, goo.gl, goshrink.com, gowat.ch, gurl.es, hellotxt.com, hex.io, hide.my, hiderefer.com, hit.my, hmm.ph, hops.me, hover.com, href.li, hsblinks.com, ht.ly, htxt.it, hubs.ly, huff.to, hurl.it, hyperurl.co, icit.fr, ick.li, icks.ro, idek.net, ift.tt, iguang.tw, iiiii.in, iky.fr, ilix.in, is.gd, iscool.net, itm.im, ity.im, ix.lt, ix.sk, j.gs, j.mp, jdem.cz, jmp2.net, jqw.de, just.as, kask.us, kd2.org, kfd.pl, kissa.be, korta.nu, kr3w.de, kratsi.cz, krod.cz, krunchd.com, kuc.cz, l-k.be, l9.fr, l9k.net, labb.in, lat.ms, lc-s.co, lc.cx, lemde.fr, libero.it, liip.to, liltext.com, linkbun.ch, linkto.im, linx.cf, llu.ch, lnk.co, lnk.ms, lnk.sk, lnkd.in, lnks.fr, lru.jp, lt.tl, m3mi.com, macte.ch, mcaf.ee, mdl29.net, merky.de, metamark.net, mic.fr, migre.me, mke.me, mktw.net, moby.to, moourl.com, more.sh, mrte.ch, myurl.in, mz.cm, n.pr, nanoref.com, nbc.co, nblo.gs, net46.net, nicou.ch, nig.gr, not.my, notlong.com, nov.io, nq.st, nsfw.in, nutshellurl.com, nyti.ms, o-x.fr, oc1.us, okok.fr, on.mktw.net, onforb.es, oua.be, ow.ly, oze.io, p6l.org, parky.tv, past.is, ph.ly, picz.us, pin.st, ping.fm, plots.fr, pm.wu.cz, po.st, politi.co, poprl.com, post.ly, posted.at, ppt.cc, ppt.li, prettylinkpro.com, ptiturl.com, ptm.ro, pub.vitrue.com, q.gs, qbn.ru, qicute.com, qlnk.net, qqc.co, qqurl.com, qr.ae, qr.net, qrtag.fr, qte.me, quip-art.com, qxp.sk, qy.fi, r.im, rb.gy, rb6.me, read.bi, readthis.ca, redirects.ca, redirx.com, redu.it, ref.so, relink.fr, reut.rs, rsmonkey.com, rt.nu, rurl.org, rx.hu, s-url.fr, safe.mn, sagyap.tk, scrnch.me, sdu.sk, sdut.us, sh.st, shar.as, shar.es, sharein.com, sharetabs.com, shink.de, shor.by, shorl.com, short.cm, short.pk, short.to, shorte.st, shorten.me, shortenurl.com, shorterlink.com, shortn.me, shortna.me, shorturl.at, shorturl.com, show.my, shredurl.com, shrinke.me, shrinkify.com, shrinkr.com, shrinkurl.us, shrt.fr, shrt.in, shrten.com, shrtnd.com, shurl.net, sicax.net, simurl.com, sina.lt, skroc.pl, slate.me, smallr.com, smarturl.it, smsh.me, snip.ly, snipr.com, snipurl.com, snsw.us, snurl.com, soo.gd, sq6.ru, sqrl.it, srnk.net, starturl.com, sturly.com, surl.co.uk, surl.me, sy.pe, t.cn, t.co, t.lh.com, t.me, t2m.io, tabzi.com, tcrn.ch, tdjt.cz, tgr.ph, thn.li, tighturl.com, tiks.co, tin.li, tiny.cc, tiny.lt, tiny.pl, tiny.tw, tinyarrows.com, tinylink.com, tinylink.in, tinyurl.com, tinyurl.hu, tl.gd, tldr.sk, tmi.me, tnw.to, tny.com, tny.cz, to.ly, to8.cc, togoto.us, tohle.de, tpmr.com, tprt.co, tr.im, tr5.in, tra.kz, traceurl.com, trck.me, trunc.it, tweetburner.com, tweez.me, twet.fr, twhub.com, twirl.at, twitclicks.com, twitterpan.com, twiturl.de, twurl.cc, twurl.nl, tyn.ee, u.mavrev.com, u.nu, u.to, u6e.de, ug.cz, ukl.me.uk, upzat.com, ur1.ca, url.ie, url.lotpatrol.com, url4.eu, url4u.co, url5.org, urladda.com, urlao.com, urlborg.com, urlcut.com, urlcutter.com, urlhawk.com, urlin.it, urlpire.com, urls.fr, urls.tn, urltea.com, urlx.ie, urlz.fr, usat.ly, utfg.sk, v.gd, v.ht, vaza.me, vbly.us, vd55.com, verd.in, vgn.am, vgn.me, viralurl.biz, viralurl.com, virl.ws, vm.lc, vov.li, vrl.to, vt802.us, vur.me, vurl.bz, vurl.com, vzturl.com, w1p.fr, w55.de, waa.ai, wapo.st, wb1.eu, web99.eu, wed.li, win.gy, wp.me, wu.cz, ww7.fr, x.co, x.vu, x2c.eu, xaddr.com, xav.cc, xil.in, xl8.eu, xoe.cz, xr.com, xrl.in, xrl.us, xtu.me, xurl.es, yatuc.com, yeca.eu, yfrog.com, yhoo.it, yiyd.com, yogh.me, youfap.me, yourls.org, yourname.shim.net, ysear.ch, yuarel.com, yweb.com, yyv.co, z0p.de, z9.fr, zapit.nu, zeek.ir, zi.ma, zi.mu, zi.pe, zip.net, zud.me, zurl.ws, zxq.net, zz.gd, zzb.bz]
+    action: remove
+    action_reason: "URL shortener [{{match}}]"
+    message: "Tu {{kind}} ha sido retirado porque contiene ({{match}}). Por favor utiliza enlaces completos y directos."
+---
+
+# ===============================================================================
+# Quitar enlaces a sitios de crowdfunding (recaudación de fondos)
+    body+domain+title+url: [begslist.com, booster.com, cash.app, cash.me, charityvest.org, crowdfunder.co.uk, crowdrise.com, donorschoose.org, firstgiving.com, fnd.us, fundanything.com, fundly.com, fundrazr.com, generosity.com, gf.me, gfwd.at, givealittle.co.nz, giveforward.com, givesendgo.com, gofund.me, gofundme.com, goget.fund, gogetfunding.com, igg.me, indiegogo.com, justgiving.com, kck.st, ketto.org, kickbooster.me, kckb.st, kickstarter.com, launchfinance.com.au, m-lp.co, patreon.com, payfriendz.me, payit2.com, payitsquare.com, paypal.com/cgi-bin, paypal.com/paypalme, paypal.me, petcaring.com, pitchfuse.com, redditmade.com, sponsorchange.org, tilt.com, tilt.tc, totalgiving.co.uk, youcaring.com, youcaring.net, youcaring.org]
+    action: remove
+    action_reason: "Crowdfunding [{{match}}]"
+    message: "Tu {{kind}} ha sido retirado. No permitimos enlaces de crowdfunding."
+---
+
+# ===============================================================================
+# Quitar encuestas y sondeos
+    body+title+url (regex): ['(dashpoll|midzy|qualtrics|typeform)\.com', '[\w.-]*(strawpoll|survey)[\w.-]*\.(com?|me|uk)(\.[\w-]+)*', 'crowdsignal\.com', 'docs\.google\.com/(a/[^/]+/)?forms(?=/)', 'forms\.gle', 'instant\.ly', 'reddit\.com/poll', 'survey\.fm', 'survey\.zohopublic\.com', 'survio\.com', 'wufoo\.com/forms']
+    action: remove
+    action_reason: "Sondeos o encuesta [{{match}}]"
+    comment: "Tu {{kind}} ha sido despublicado. No permitimos encuestas o sondeos."
+---
+
+# ===============================================================================
+# No permitir publicaciones con preguntas:
+    type: submission
+    moderators_exempt: true
+    title (includes, regex): ['\?']
+    action: remove
+    comment: |
+        I noticed your post **is a question** => please post it in /r/AskSpain.
+        If this was mistakenly flagged, please [write to us](https://www.reddit.com/message/compose?to=/r/{{subreddit}}).
+         
+        Vi que tu publicación **es una pregunta** => por favor publícalo de nuevo en /r/AskSpain.
+        Si esto fue un error, [por favor escríbenos](https://www.reddit.com/message/compose?to=/r/{{subreddit}}).
+    action_reason: "Prohibidas preguntas"
+---
+
+# ===============================================================================
+# No permitir publicaciones de contenido politíco:
+    type: submission
+    title (includes, regex): [
+        '(?i)psoe', '(?i)vox', '(?i)(\bPP\b)', '\bCs\b', '\bC''s\b', '(?i)(partido popular)', '(?i)(socialista)', '(?i)(pedro sanchez)', '(?i)(pedro sánchez)', '(?i)(pablo iglesias)', '(?i)(unidas podemos)', '\bCUP\b', '(?i)JxCAT', '(?i)(\bERC\b)', '(?i)(\bPNV\b)', '(?i)bildu', '(?i)(\bCOLAU\b)', '(?i)(\bTORRA\b)', '(?i)separatis', '(?i)independentis', '(?i)abertzale', '(?i)comunis', '(?i)democr', '(?i)socialis', '(?i)fascis', '(?i)\bFACHA\b', '(?i)generalitat', '(?i)investid', '(?i)votante', '(?i)juez', '(?i)elector', '(?i)(independencia de cataluña)', '(?i)separatis', '(?i)tripart', '(?i)feminis', '(?i)tribunal', '(?i)constituc', '(?i)polit', '(?i)polít', '(?i)inmigra', '(?i)gobern', '(?i)gobierno', '(?i)venezol', '(?i)venezu', '(?i)diputa'
+    ]
+    action: remove
+    moderators_exempt: true
+    comment: |
+        I noticed your post **is about politics** => please post it in /r/SpainPolitics.
+        If this was mistakenly flagged, please [write to us](https://www.reddit.com/message/compose?to=/r/{{subreddit}}).
+         
+        Vi que tu publicación **es sobre política** => por favor publícalo de nuevo en /r/SpainPolitics.
+        Si esto fue un error, [por favor escríbenos](https://www.reddit.com/message/compose?to=/r/{{subreddit}}).
+    action_reason: "Prohibida política"
+---
+
+# ===============================================================================
+# Quitar publicaciones de sitios de contenido frecuentemente editorializado.
+    domain+body+title: [sputniknews.com, rt.com, zerohedge.com]
+    action: filter
+    action_reason: "Desinformación o editorialización [{{match}}]"
+---
+
+# ===============================================================================
+# Quitar publicaciones o comentarios que han recibido mas de X reportes.
+    reports: 5
+    action: remove
+    comment: |
+        Your submission has been removed due to too many reports. If you think it needs to be re-approved, please contact the mods and **be sure to include the permalink of the deleted comment**.
+    modmail: "{{kind}} retirado por tener 3 reportes. Autor: /u/{{author}}"
+    action_reason: "Demasiados reportes"
+---
+
+# ===============================================================================
+# No permitir publicaciones de texto que solo contienen un enlace
+    type: text submission
+    body (regex, full-text): ['(\[[^\]]*\]\()?https?://\S+\)?']
+    action: remove
+    action_reason: "Link-only self post"
+    comment: "Tu publicación ha sido despublicada. Por favor publícala como Enlace, y no como Texto."
+---
+
+
+# ===============================================================================
+# ▓▓▓▓▓▓ REGLAS PARA FILTRAR CONTENIDO PARA SU FUTURA REVISIÓN ▓▓▓▓▓▓
+# ===============================================================================
+
+# ===============================================================================
+# Filtrar Twitter y blogspam desechable
+    type: submission
+    domain: [t.co, twitter.com, write.as, telegra.ph]
+    action: filter
+    comment: "Tu publicación será revisada manualmente por un moderador como medida antispam. Si es aceptada, este comentario será borrado."
+---
+
+# ===============================================================================
+# Filtrar enlaces a Youtube
+    type: submission
+    domain: [youtube.com, youtu.be]
+    action: filter
+    comment: "Tu publicación será revisada manualmente por un moderador como medida antispam. Si es aceptada, este comentario será borrado."
+---
+
+# ===============================================================================
+# Filtrar publicaciones y comentarios de usuarios nuevos
+    author:
+        account_age: "< 2 days"
+    action: filter
+    action_reason: "Usuario nuevo"
+---
+
+# ===============================================================================
+# Alertar cuando una publicación mencione Olivenza:
+    title+body (regex): ['((?i)olivença)']
+    action: report
+    modmail: "El usuario {{author}} mencionó Olivença. Revisar {{kind}}."
+---
+
+# ===============================================================================
+# Quitar spam recurrente de una secta India:
+type: submission
+title+body (includes, regex): ['(?i)(Rampal)', '(i?)(Maharaj)']
+action: remove
+---
+
+
+# ===============================================================================
+# ▓▓▓▓▓▓ REGLAS PARA PUBLICAR CONTENIDO AUTOMÁTICAMENTE ▓▓▓▓▓▓
+# ===============================================================================
+
+# ===============================================================================
+# Mensaje sticky en todas las publicaciones nuevas
+    type: submission
+    comment_stickied: true
+    comment_locked: true
+    comment: |
+        * Sé respetuoso con los demás. Debate y discute los méritos de las ideas presentadas, pero **no** ataques o insultes a otras personas.
+            
+        * Si ves a otros usuarios violando las normas, por favor usa el **botón de Report**.
+---
